@@ -3,6 +3,7 @@ package com.example.offres_microservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// trouver moyen de modifier le port où lancer l'application
 @SpringBootApplication
 public class OffresMicroserviceApplication {
 
