@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12cd5682-6d0a-450b-953e-2781530b8c07" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/offres_microservice/exception/ResourceNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/offres_microservice/repository/EmployeurRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/offres_microservice/OffresMicroserviceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/offres_microservice/OffresMicroserviceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/offres_microservice/controller/OffreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/offres_microservice/controller/OffreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/offres_microservice/repository/OffreRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/offres_microservice/repository/OffreRepository.java" afterDir="false" />
-    </list>
+    <list default="true" id="12cd5682-6d0a-450b-953e-2781530b8c07" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,6 +82,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "spring.configuration.checksum": "cd760103a251f16c32e78ffd7e19f124"
   }
@@ -115,7 +110,7 @@
       <workItem from="1668785381726" duration="2454000" />
       <workItem from="1668869092996" duration="2318000" />
       <workItem from="1668875721595" duration="568000" />
-      <workItem from="1668876314383" duration="14192000" />
+      <workItem from="1668876314383" duration="14370000" />
     </task>
     <servers />
   </component>
