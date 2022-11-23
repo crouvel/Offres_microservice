@@ -5,10 +5,15 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
+
+
 @Table(name = "offres")
-public class Offre {
+public class Offres {
 
 
     @Id
@@ -45,7 +50,7 @@ public class Offre {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Employeur employeur;
 
-    public Offre(String titre, String description, Date dateDebut, Date dateFin, String lieu, int nbre_postes, int remunerationBase, String avantage) {
+    /*public Offre(String titre, String description, Date dateDebut, Date dateFin, String lieu, int nbre_postes, int remunerationBase, String avantage) {
         this.titre = titre;
         this.description = description;
         this.dateDebut = dateDebut;
@@ -56,6 +61,6 @@ public class Offre {
         this.avantage = avantage;
     }
 
-    public Offre(){}
+    public Offre(){}*/
 
 }

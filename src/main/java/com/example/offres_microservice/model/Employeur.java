@@ -3,8 +3,8 @@ package com.example.offres_microservice.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "employeur")
+//@Entity
+//@Table(name = "employeur")
 public class Employeur {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
