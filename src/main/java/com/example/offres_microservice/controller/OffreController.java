@@ -1,11 +1,12 @@
 package com.example.offres_microservice.controller;
 
-//import com.example.offres_microservice.model.Offre;
 import com.example.offres_microservice.model.Offres;
 import com.example.offres_microservice.repository.OffreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -23,6 +24,11 @@ public class OffreController {
         return offreRepository.findAll();
 
     }
+
+    /*@PostMapping("/offre")
+    public Offres offreChercheur(@Valid @RequestBody Offres offre) {
+        return offreRepository.save(offre);
+    }*/
 
     /*@GetMapping("/offres")
     public List<Offre> getAllOffres() {
@@ -47,10 +53,7 @@ public class OffreController {
         return ResponseEntity.ok().body(offre);
     }
 
-    @PostMapping("/offre")
-    public Offre offreChercheur(@Valid @RequestBody Offre offre) {
-        return offreRepository.save(offre);
-    }
+
 
     /*@PutMapping("/users/{id}")
     public ResponseEntity<User> updateEmployee(@PathVariable(value = "id") Long userId,

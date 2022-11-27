@@ -19,7 +19,6 @@ import static io.r2dbc.spi.ConnectionFactoryOptions.*;
 // trouver moyen de modifier le port où lancer l'application
 
 @SpringBootApplication
-//@EnableR2dbcRepositories(basePackageClasses = OffreRepository.class)
 public class OffresMicroserviceApplication {
 
     public static void main(String[] args) {

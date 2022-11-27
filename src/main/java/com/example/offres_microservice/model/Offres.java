@@ -11,7 +11,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "offres")
 public class Offres {
 
