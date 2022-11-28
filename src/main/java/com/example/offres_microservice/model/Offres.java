@@ -21,7 +21,7 @@ public class Offres {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private int id;
 
     //@NotBlank
     private String titre;
@@ -51,6 +51,14 @@ public class Offres {
     @JoinColumn(name = "employeur_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Employeur employeur;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     /*public Offre(String titre, String description, Date dateDebut, Date dateFin, String lieu, int nbre_postes, int remunerationBase, String avantage) {
         this.titre = titre;

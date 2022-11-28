@@ -1,5 +1,7 @@
 package com.example.offres_microservice.controller;
 
+import com.example.offres_microservice.Producer.OffresProducer;
+import com.example.offres_microservice.dto.OffresEvent;
 import com.example.offres_microservice.model.Offres;
 import com.example.offres_microservice.repository.OffreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,22 +9,43 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
 public class OffreController {
 
-
+    private OffresProducer offresProducer;
     @Autowired OffreRepository offreRepository;
 
     // @Autowired
     // private EmployeurRepository employeurRepository;
 
-    @GetMapping("/offres")
+    public OffreController(OffresProducer orderProducer) {
+        this.offresProducer = orderProducer;
+    }
+
+    @GetMapping("/offers")
     public Flux<Offres> getOffre() {
 
         return offreRepository.findAll();
 
+    }
+
+    @PostMapping("/orders")
+    public String placeOrder(@RequestBody Offres offre){
+
+        //offre.setId(UUID.randomUUID());
+
+        OffresEvent offresEvent = new OffresEvent();
+        offresEvent.setStatus("PENDING");
+        offresEvent.setMessage("order status is in pending state");
+        offreRepository.save(offre);
+        offresEvent.setOffres(offre);
+
+        offresProducer.sendMessage(offresEvent);
+
+        return "Order placed successfully ...";
     }
 
     /*@PostMapping("/offre")
@@ -78,4 +101,6 @@ public class OffreController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }*/
+
+
 }
