@@ -1,36 +1,44 @@
 package com.example.offres_microservice.Producer;
 
-import com.example.offres_microservice.dto.OffresEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.launchdarkly.eventsource.EventHandler;
+import com.launchdarkly.eventsource.EventSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
+import java.util.concurrent.TimeUnit;
+
 @Service
 public class OffresProducer {
 
+    @Value("${spring.kafka.topic.name}")
+    private String topicName;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(OffresProducer.class);
 
-    private NewTopic topic;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
-    private KafkaTemplate<String, OffresEvent> kafkaTemplate;
-
-    public OffresProducer(NewTopic topic, KafkaTemplate<String, OffresEvent> kafkaTemplate) {
-        this.topic = topic;
+    public OffresProducer(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendMessage(OffresEvent event){
-        LOGGER.info(String.format("Order event => %s", event.toString()));
+    public void sendMessage(String messageEnv) throws InterruptedException {
+        // to read real time stream data from wikimedia, we use event source
+        LOGGER.info(String.format("Order event => %s", messageEnv));
 
-        // create Message
-        Message<OffresEvent> message = MessageBuilder
-                .withPayload(event)
-                .setHeader(KafkaHeaders.TOPIC, topic.name())
+        Message<String> message = MessageBuilder
+                .withPayload(messageEnv)
+                .setHeader(KafkaHeaders.TOPIC, topicName)
                 .build();
         kafkaTemplate.send(message);
     }

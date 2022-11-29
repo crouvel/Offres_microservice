@@ -1,12 +1,14 @@
 package com.example.offres_microservice.controller;
 
 import com.example.offres_microservice.Producer.OffresProducer;
-import com.example.offres_microservice.dto.OffresEvent;
-import com.example.offres_microservice.model.Offres;
+import com.example.offres_microservice.model.Offer;
 import com.example.offres_microservice.repository.OffreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -26,37 +28,42 @@ public class OffreController {
     }
 
     @GetMapping("/offers")
-    public Flux<Offres> getOffre() {
+    public Flux<Offer> getOffre() {
 
         return offreRepository.findAll();
 
     }
 
-    @PostMapping("/orders")
-    public String placeOrder(@RequestBody Offres offre){
+
+    public String placeOrder(@RequestBody Offer offre) throws InterruptedException {
 
         //offre.setId(UUID.randomUUID());
 
-        OffresEvent offresEvent = new OffresEvent();
-        offresEvent.setStatus("PENDING");
-        offresEvent.setMessage("order status is in pending state");
-        offreRepository.save(offre);
-        offresEvent.setOffres(offre);
 
-        offresProducer.sendMessage(offresEvent);
+        //offresEvent.setStatus("PENDING");
+        //offresEvent.setMessage("order status is in pending state");
+        //offreRepository.save(offre);
+        //offresEvent.setOffre(offre);
+
+        offresProducer.sendMessage(offre.getCity());
 
         return "Order placed successfully ...";
     }
 
-    /*@PostMapping("/offre")
-    public Offres offreChercheur(@Valid @RequestBody Offres offre) {
-        return offreRepository.save(offre);
-    }*/
+    @PostMapping("/offers")
+    Mono<ResponseEntity<Offer>> addStudent(@RequestBody Offer offres) {
+        //offres.setRegisteredOn(System.currentTimeMillis());
+        //offres.setStatus(1);
+        return offreRepository.save(offres).map(offre -> {
+            try {
+                placeOrder(offre);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return new ResponseEntity<>(offre, HttpStatus.CREATED);
+        });
+    }
 
-    /*@GetMapping("/offres")
-    public List<Offre> getAllOffres() {
-        return Collections.singletonList(offreRepository.findAll());
-    }*/
 
     /*@GetMapping("/employeurs/{employeurId}/offres")
     public ResponseEntity<List<Offre>> getAllOffresByEmployeurId(@PathVariable(value = "employeurId") Long employeurId) throws ResourceNotFoundException {
