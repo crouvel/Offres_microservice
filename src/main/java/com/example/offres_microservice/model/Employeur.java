@@ -17,7 +17,7 @@ public class Employeur {
     private User user;
 
     @NotBlank
-    private String nomEntreprise;
+    private String entreprise;
 
     @NotBlank
     private String adresse;
@@ -34,7 +34,7 @@ public class Employeur {
     public Employeur(Long id, User user, String nomEntreprise, String adresse, String description, int note, String activite) {
         this.id = id;
         this.user = user;
-        this.nomEntreprise = nomEntreprise;
+        this.entreprise = nomEntreprise;
         this.adresse = adresse;
         this.description = description;
         this.note = note;
@@ -58,11 +58,11 @@ public class Employeur {
     }
 
     public String getNomEntreprise() {
-        return nomEntreprise;
+        return entreprise;
     }
 
     public void setNomEntreprise(String nomEntreprise) {
-        this.nomEntreprise = nomEntreprise;
+        this.entreprise = nomEntreprise;
     }
 
     public String getAdresse() {
