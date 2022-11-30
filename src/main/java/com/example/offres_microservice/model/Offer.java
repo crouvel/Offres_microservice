@@ -63,7 +63,7 @@ public class Offer {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Employeur employeur;
 
-    public Offer(String titre, String description, Date dateDebut, Date dateFin, String lieu, int nbre_postes, int remunerationBase, String avantage) {
+    public Offer(String titre, String description, Date dateDebut, Date dateFin, String lieu, int nbre_postes, int remunerationBase, String avantage/*Long employeur_id*/) {
         this.title = titre;
         this.description = description;
         this.debut = dateDebut;
@@ -72,6 +72,7 @@ public class Offer {
         this.nbre_postes = nbre_postes;
         this.income = remunerationBase;
         this.advantage = avantage;
+        //this.employeur_id = employeur_id;
     }
 
 }
