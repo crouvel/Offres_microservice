@@ -34,8 +34,7 @@ public class OffreController {
 
     }
 
-
-    public String placeOrder(@RequestBody Offer offre) throws InterruptedException {
+    public String notifyOffer(@RequestBody Offer offre) throws InterruptedException {
 
         //offre.setId(UUID.randomUUID());
 
@@ -51,12 +50,12 @@ public class OffreController {
     }
 
     @PostMapping("/offers")
-    Mono<ResponseEntity<Offer>> addStudent(@RequestBody Offer offres) {
+    Mono<ResponseEntity<Offer>> addOffer(@RequestBody Offer offres) {
         //offres.setRegisteredOn(System.currentTimeMillis());
         //offres.setStatus(1);
         return offreRepository.save(offres).map(offre -> {
             try {
-                placeOrder(offre);
+                notifyOffer(offre);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -96,18 +95,5 @@ public class OffreController {
         final Employee updatedEmployee = employeeRepository.save(employee);
         return ResponseEntity.ok(updatedEmployee);
     }*/
-
-    /*@DeleteMapping("/offres/{id}")
-    public Map<String, Boolean> deleteOffre(@PathVariable(value = "id") Long offreId)
-            throws ResourceNotFoundException {
-        Offre offre = offreRepository.findById(offreId)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + offreId));
-
-        offreRepository.delete(offre);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
-    }*/
-
 
 }
