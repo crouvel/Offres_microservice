@@ -13,11 +13,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface OffreRepository extends R2dbcRepository<Offer, Long> {
     List<Offer> findByEmployeurId(Long employeurId);
     //Boolean existsByUsername(String username);
 
     //Boolean existsByEmail(String email);
+    //Offer findByOfferID(Long offerID);
+    Mono<Offer> findByTitle(String title);
     Flux<Offer> findAll();
 }

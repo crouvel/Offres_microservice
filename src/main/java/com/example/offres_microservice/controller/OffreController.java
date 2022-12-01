@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/offers")
 public class OffreController {
 
     private OffresProducer offresProducer;
@@ -27,7 +27,7 @@ public class OffreController {
         this.offresProducer = orderProducer;
     }
 
-    @GetMapping("/offers")
+    @GetMapping("/all")
     public Flux<Offer> getOffre() {
 
         return offreRepository.findAll();
@@ -36,23 +36,21 @@ public class OffreController {
 
     public String notifyOffer(@RequestBody Offer offre) throws InterruptedException {
 
-        //offre.setId(UUID.randomUUID());
+        offresProducer.sendMessage(offre.getCity() + " : " + offre.getTitle().toUpperCase());
 
+        return "Offer placed successfully ...";
+    }
 
-        //offresEvent.setStatus("PENDING");
-        //offresEvent.setMessage("order status is in pending state");
-        //offreRepository.save(offre);
-        //offresEvent.setOffre(offre);
-
-        offresProducer.sendMessage(offre.getCity());
-
-        return "Order placed successfully ...";
+    @GetMapping("/{title}")
+    Mono<ResponseEntity<Offer>> getOffer(@PathVariable("title") String title) {
+        return offreRepository.findByTitle(title).map(offer -> {
+            return new ResponseEntity<>(offer, HttpStatus.OK);
+        });
     }
 
     @PostMapping("/offers")
     Mono<ResponseEntity<Offer>> addOffer(@RequestBody Offer offres) {
-        //offres.setRegisteredOn(System.currentTimeMillis());
-        //offres.setStatus(1);
+
         return offreRepository.save(offres).map(offre -> {
             try {
                 notifyOffer(offre);
@@ -62,38 +60,5 @@ public class OffreController {
             return new ResponseEntity<>(offre, HttpStatus.CREATED);
         });
     }
-
-
-    /*@GetMapping("/employeurs/{employeurId}/offres")
-    public ResponseEntity<List<Offre>> getAllOffresByEmployeurId(@PathVariable(value = "employeurId") Long employeurId) throws ResourceNotFoundException {
-        if (!employeurRepository.existsById(employeurId)) {
-            throw new ResourceNotFoundException("Not found offers list with employeur id = " + employeurId);
-        }
-
-        List<Offre> offres = offreRepository.findByEmployeurId(employeurId);
-        return new ResponseEntity<>(offres, HttpStatus.OK);
-    }
-
-    @GetMapping("/offres/{id}")
-    public ResponseEntity<Offre> getOffreById(@PathVariable(value = "id") Long offreId)
-            throws ResourceNotFoundException {
-        Offre offre = offreRepository.findById(offreId)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + offreId));
-        return ResponseEntity.ok().body(offre);
-    }
-
-
-
-    /*@PutMapping("/users/{id}")
-    public ResponseEntity<User> updateEmployee(@PathVariable(value = "id") Long userId,
-                                                   @Valid @RequestBody User userDetails) throws ResourceNotFoundException {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
-        user.setEmailId(employeeDetails.getEmailId());
-        employee.setLastName(employeeDetails.getLastName());
-        employee.setFirstName(employeeDetails.getFirstName());
-        final Employee updatedEmployee = employeeRepository.save(employee);
-        return ResponseEntity.ok(updatedEmployee);
-    }*/
 
 }
